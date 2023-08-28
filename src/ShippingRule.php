@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Enum\DiscountsEnum;
+use Enum\PackageSizesEnum;
+use Enum\ProvidersEnum;
 
 class ShippingRule
 {
@@ -14,9 +16,28 @@ class ShippingRule
 
     private float $discountApplied = 0;
 
-    public function applyRules(Transaction $transaction, ShippingProvider $shippingProvider): array
+    public function applyRules(Transaction $transaction, string $shippingProvider): array
     {
         $packageSize = $transaction->getPackageSize();
-        $
+        $discount = 0;
+
+        $packagePrices = ProvidersEnum::getPackagePricesByProviderAndSize();
+
+        $price = match ($shippingProvider) {
+            ProvidersEnum::LP->value => $packagePrices[ProvidersEnum::LP->value][$packageSize],
+            ProvidersEnum::MR->value => $packagePrices[ProvidersEnum::MR->value][$packageSize],
+            default => ['price' => 0, 'discount' => 0]
+        };
+
+        if ($packageSize === PackageSizesEnum::L->value && $shippingProvider === ProvidersEnum::LP->value) {
+            $discount = $this->applyThirdDiscount();
+        }
+
+        return [];
+    }
+
+    private function applyThirdDiscount()
+    {
+
     }
 }
