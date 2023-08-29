@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use Enum\DiscountsEnum;
-use Enum\PackageSizesEnum;
-use Enum\ProvidersEnum;
+use Constant\Discounts;
+use Constant\PackageSizes;
+use Constant\Providers;
 
 class ShippingRule
 {
     private float $thirdLDiscountForLp;
 
-    private int $maxDiscountPerMonth = DiscountsEnum::MAX_DISCOUNT_PER_MONTH->value;
+    private int $maxDiscountPerMonth = Discounts::MAX_DISCOUNT_PER_MONTH;
 
     private float $discountAccumulated = 0;
 
@@ -21,23 +21,23 @@ class ShippingRule
         $packageSize = $transaction->getPackageSize();
         $discount = 0;
 
-        $packagePrices = ProvidersEnum::getPackagePricesByProviderAndSize();
+        $packagePrices = Providers::getPackagePricesByProviderAndSize();
 
         $price = match ($shippingProvider) {
-            ProvidersEnum::LP->value => $packagePrices[ProvidersEnum::LP->value][$packageSize],
-            ProvidersEnum::MR->value => $packagePrices[ProvidersEnum::MR->value][$packageSize],
+            Providers::LP => $packagePrices[Providers::LP][$packageSize],
+            Providers::MR => $packagePrices[Providers::MR][$packageSize],
             default => ['price' => 0, 'discount' => 0]
         };
 
-        if ($packageSize === PackageSizesEnum::L->value && $shippingProvider === ProvidersEnum::LP->value) {
-            $discount = $this->applyThirdDiscount();
-        }
+//        if ($packageSize === PackageSizes::L && $shippingProvider === Providers::LP) {
+//            $discount = $this->applyThirdDiscount();
+//        }
 
         return [];
     }
 
-    private function applyThirdDiscount()
-    {
-
-    }
+//    private function applyThirdDiscount()
+//    {
+//        if ($this->discountApplied < )
+//    }
 }
