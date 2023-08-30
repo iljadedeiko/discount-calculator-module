@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace App;
+
+require __DIR__ . '/../vendor/autoload.php';
+
 class ShippingProvider
 {
     private string $name;

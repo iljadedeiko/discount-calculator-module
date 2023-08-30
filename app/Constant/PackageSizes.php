@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Constant;
+namespace App\Constant;
+
+require __DIR__ . '/../../vendor/autoload.php';
 
 class PackageSizes
 {

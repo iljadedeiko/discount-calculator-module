@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
-use Constant\Discounts;
-use Constant\PackageSizes;
-use Constant\Providers;
+namespace App;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use App\Constant\Discounts;
+use App\Constant\PackageSizes;
+use App\Constant\Providers;
 
 class ShippingRule
 {
