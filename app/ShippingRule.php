@@ -8,27 +8,29 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\Constant\Discounts;
 use App\Constant\Providers;
+use DateTime;
 
 class ShippingRule
 {
-    private float $thirdLDiscountForLp;
+    private float $discountedPrice = 0;
 
-    private int $maxDiscountPerMonth = Discounts::MAX_DISCOUNT_PER_MONTH;
+    private float $discountsApplied = 0;
 
-    private float $discountAccumulator = 0;
+    private DateTime $currentMonth;
 
-    private float $appliedDiscounts = 0;
+    private DateTime $discountAppliedMonth;
 
     public function applyRules(Transaction $transaction): array
     {
-        $reducedPrice = $this->getReducedPrice($transaction);
-        $discount = $this->calculateDiscount($transaction->getProvider(), $transaction->getPackageSize(), $reducedPrice);
-
-        $this->updateDiscountAccumulator($discount);
-
         $packageSize = $transaction->getPackageSize();
+        $provider = $transaction->getProvider();
+
+        $shippingPrices = Storage::getShippingPrices();
+        $price = $shippingPrices[$provider][$packageSize];
         $discount = 0;
 
-        return ['price' => $lowestPrice, ]
+//        $this->updateDiscountAccumulator($discount);
+
+        return ['price' => $price, 'discount' => $discount];
     }
 }

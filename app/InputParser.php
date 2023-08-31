@@ -11,6 +11,8 @@ use function explode;
 
 class InputParser
 {
+    private const LINE_DATA_SEPARATOR = ' ';
+
     private const LINE_PART_LIMIT = 3;
 
     public function parseInputFile($fileName): ?array
@@ -20,7 +22,14 @@ class InputParser
         $lines = file($fileName, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         foreach ($lines as $line) {
-            [$date, $packageSize, $provider] = explode(' ', $line, self::LINE_PART_LIMIT);
+            $separatedLineData = explode(self::LINE_DATA_SEPARATOR, $line, self::LINE_PART_LIMIT);
+            if (count($separatedLineData) !== self::LINE_PART_LIMIT) {
+                $transactions[] = $line;
+
+                continue;
+            }
+
+            [$date, $packageSize, $provider] = $separatedLineData;
 
             $validator = new InputValidator();
             $validatedLine = $validator->validate($date, $packageSize, $provider);
