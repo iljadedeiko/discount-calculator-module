@@ -7,6 +7,7 @@ namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Constant\Discounts;
+use App\Constant\PackageSizes;
 use App\Constant\Providers;
 use DateTime;
 
@@ -29,8 +30,12 @@ class ShippingRule
         $price = $shippingPrices[$provider][$packageSize];
         $discount = 0;
 
-//        $this->updateDiscountAccumulator($discount);
+        if ($packageSize === PackageSizes::S) {
+            $price = $this->getLowestPackagePrice(PackageSizes::S);
+        }
 
         return ['price' => $price, 'discount' => $discount];
     }
+
+//    private function getLowestPackage
 }
