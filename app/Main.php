@@ -6,8 +6,12 @@ namespace App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use function sprintf;
+
 class Main
 {
+    private const IGNORED_LINE_INFO = 'Ignored';
+
     public function run($inputFileName): void
     {
         $inputParser = new InputParser();
@@ -16,15 +20,19 @@ class Main
 
         $transactions = $inputParser->parseInputFile($inputFileName);
 
-//        foreach ($transactions as $transaction) {
-//            $calculatedPriceAndDiscount = $shipmentCalculator->
+        foreach ($transactions as $transaction) {
+            $output = '';
 
-//            echo '';
-//        }
+            if ($transaction instanceof Transaction === false) {
+                $output = sprintf('%s %s', $transaction, self::IGNORED_LINE_INFO);
+            }
 
-        foreach($transactions as $transaction) {
-            echo $transaction;
+            $calculatedPriceAndDiscount = $shippingRule->applyRules($transaction);
         }
+
+//        foreach($transactions as $transaction) {
+//            var_dump($transaction);
+//        }
     }
 }
 

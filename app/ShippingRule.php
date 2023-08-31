@@ -7,7 +7,6 @@ namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Constant\Discounts;
-use App\Constant\PackageSizes;
 use App\Constant\Providers;
 
 class ShippingRule
@@ -16,32 +15,20 @@ class ShippingRule
 
     private int $maxDiscountPerMonth = Discounts::MAX_DISCOUNT_PER_MONTH;
 
-    private float $discountAccumulated = 0;
+    private float $discountAccumulator = 0;
 
-    private float $discountApplied = 0;
+    private float $appliedDiscounts = 0;
 
-    public function applyRules(Transaction $transaction, string $shippingProvider): array
+    public function applyRules(Transaction $transaction): array
     {
+        $reducedPrice = $this->getReducedPrice($transaction);
+        $discount = $this->calculateDiscount($transaction->getProvider(), $transaction->getPackageSize(), $reducedPrice);
+
+        $this->updateDiscountAccumulator($discount);
+
         $packageSize = $transaction->getPackageSize();
         $discount = 0;
 
-        $packagePrices = Providers::getPackagePricesByProviderAndSize();
-
-        $price = match ($shippingProvider) {
-            Providers::LP => $packagePrices[Providers::LP][$packageSize],
-            Providers::MR => $packagePrices[Providers::MR][$packageSize],
-            default => ['price' => 0, 'discount' => 0]
-        };
-
-//        if ($packageSize === PackageSizes::L && $shippingProvider === Providers::LP) {
-//            $discount = $this->applyThirdDiscount();
-//        }
-
-        return [];
+        return ['price' => $lowestPrice, ]
     }
-
-//    private function applyThirdDiscount()
-//    {
-//        if ($this->discountApplied < )
-//    }
 }

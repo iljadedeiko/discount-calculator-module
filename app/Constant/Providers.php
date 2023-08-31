@@ -16,6 +16,11 @@ class Providers
     {
     }
 
+    public static function getProviders(): array
+    {
+        return [self::MR, self::LP];
+    }
+
     public static function getPackagePricesByProviderAndSize(): array
     {
         return [

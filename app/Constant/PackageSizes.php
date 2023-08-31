@@ -17,4 +17,9 @@ class PackageSizes
     private function __construct()
     {
     }
+
+    public static function getPackageSizes(): array
+    {
+        return [self::S, self::M, self::L];
+    }
 }

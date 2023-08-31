@@ -4,32 +4,33 @@ declare(strict_types=1);
 
 namespace App;
 
+use DateTime;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 class Transaction
 {
-    private string $date;
+    private DateTime $date;
 
     private string $packageSize;
 
-    private string $carrier;
+    private string $provider;
 
-    public function __construct(string $date, string $packageSize, string $carrier)
+    public function __construct(DateTime $date, string $packageSize, string $provider)
     {
         $this->date = $date;
         $this->packageSize = $packageSize;
-        $this->carrier  = $carrier;
+        $this->provider  = $provider;
     }
 
-    public function getDate(): string
+    public function getDate(): DateTime
     {
         return $this->date;
     }
 
-    public function setDate(string $date): self
+    public function setDate(DateTime $date): self
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -45,14 +46,14 @@ class Transaction
         return $this;
     }
 
-    public function getCarrier(): string
+    public function getProvider(): string
     {
-        return $this->carrier;
+        return $this->provider;
     }
 
-    public function setCarrier(string $carrier): self
+    public function setProvider(string $provider): self
     {
-        $this->carrier = $carrier;
+        $this->provider = $provider;
 
         return $this;
     }

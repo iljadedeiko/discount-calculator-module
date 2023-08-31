@@ -20,13 +20,18 @@ class InputParser
         $lines = file($fileName, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
         foreach ($lines as $line) {
-            [$date, $packageSize, $carrier] = explode(' ', $line, self::LINE_PART_LIMIT);
+            [$date, $packageSize, $provider] = explode(' ', $line, self::LINE_PART_LIMIT);
 
-            if ($date === null || $packageSize === null || $carrier === null) {
-                return null;
+            $validator = new InputValidator();
+            $validatedLine = $validator->validate($date, $packageSize, $provider);
+
+            if ($validatedLine === null) {
+                $transactions[] = $line;
+
+                continue;
             }
 
-            $transactions[] = new Transaction($date, $packageSize, $carrier);
+            $transactions[] = $validatedLine;
         }
 
         return $transactions;
