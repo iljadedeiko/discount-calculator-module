@@ -53,6 +53,8 @@ class ShippingRule
             }
         }
 
+        $this->discountedPrice = $discount;
+
         if ($discount === 0) {
             $discount = Discounts::NO_DISCOUNT_SYMBOL;
         }
