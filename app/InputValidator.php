@@ -32,9 +32,7 @@ class InputValidator
             return null;
         }
 
-        $dateObject = DateTime::createFromFormat(Dates::INPUT_DATE_FORMAT, $date);
-
-        return new Transaction($dateObject, $packageSize, $provider);
+        return new Transaction($date, $packageSize, $provider);
     }
 
     private function dateIsValid(string $date): bool

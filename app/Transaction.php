@@ -10,25 +10,25 @@ require __DIR__ . '/../vendor/autoload.php';
 
 class Transaction
 {
-    private DateTime $date;
+    private string $date;
 
     private string $packageSize;
 
     private string $provider;
 
-    public function __construct(DateTime $date, string $packageSize, string $provider)
+    public function __construct(string $date, string $packageSize, string $provider)
     {
         $this->date = $date;
         $this->packageSize = $packageSize;
         $this->provider  = $provider;
     }
 
-    public function getDate(): DateTime
+    public function getDate(): string
     {
         return $this->date;
     }
 
-    public function setDate(DateTime $date): self
+    public function setDate(string $date): Transaction
     {
         $this->date = $date;
         return $this;

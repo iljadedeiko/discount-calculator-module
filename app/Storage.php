@@ -9,7 +9,7 @@ use App\Constant\Providers;
 
 class Storage
 {
-    public static function getShippingPrices(): array
+    public static function getShippingPricesByProvider(): array
     {
         return [
             Providers::LP => [
@@ -18,9 +18,9 @@ class Storage
                 PackageSizes::L => 6.9,
             ],
             Providers::MR => [
-                PackageSizes::S => 2,
-                PackageSizes::M => 3,
-                PackageSizes::L => 4,
+                PackageSizes::S => 2.00,
+                PackageSizes::M => 3.00,
+                PackageSizes::L => 4.00,
             ],
         ];
     }

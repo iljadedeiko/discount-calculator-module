@@ -7,6 +7,7 @@ namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
 use function sprintf;
+use function number_format;
 
 class Main
 {
@@ -34,13 +35,16 @@ class Main
 
     private function output(Transaction $transaction, array $calculatedPriceAndDiscount): void
     {
+        $price = number_format($calculatedPriceAndDiscount['price'], 2,  '.', '');
+        $discount = $calculatedPriceAndDiscount['discount'];
+
         echo sprintf(
             "%s %s %s %s %s" . PHP_EOL,
-            $transaction->getDate()->format('Y-m-d'),
+            $transaction->getDate(),
             $transaction->getPackageSize(),
             $transaction->getProvider(),
-            $calculatedPriceAndDiscount['price'],
-            $calculatedPriceAndDiscount['discount']
+            $price,
+            $discount
         );
     }
 }
