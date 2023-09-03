@@ -17,6 +17,6 @@
 * Design decisions and assumptions are presented in the code as comments in some places in the application
 
 ### Tests 
-* There are no tests in the appendix because of the decision to rewrite the main part.
-Refactoring allows to extend the application by adding new functionality 
-as well as modifying the existing one. Unfortunately for this reason there is no time left for writing unit tests.
+* Because of the decision to rewrite the main part, there are no tests in the application.
+After refactoring the code, it became possible to easily extend the application by adding new functionality
+as well as modifying existing ones. Unfortunately, there was no time left for writing unit tests.
