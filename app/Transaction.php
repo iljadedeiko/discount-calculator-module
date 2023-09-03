@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use DateTime;
-
 require __DIR__ . '/../vendor/autoload.php';
 
 class Transaction

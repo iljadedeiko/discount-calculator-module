@@ -15,6 +15,7 @@ class ShippingRule
 {
     public function applyRules(Transaction $transaction, Discount $discount): array
     {
+        // manager collects all the rules applied to the transaction and applies them
         $manager = new DiscountManager();
 
         $packageSize = $transaction->getPackageSize();
@@ -26,7 +27,7 @@ class ShippingRule
         $price = Storage::getShippingPricesByProvider()[$provider][$packageSize];
         $transaction->setPrice($price);
 
-        // Add all discount rules to the manager
+        // add all discount rules to the manager
         $manager->addRule(new LowestSPriceRule());
         $manager->addRule(new ThirdShipmentFreeRule());
         $manager->addRule(new MonthlyLimitRule());

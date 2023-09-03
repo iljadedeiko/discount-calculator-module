@@ -17,9 +17,11 @@ class Main
 
     public function run($inputFileName): void
     {
+        // discount object stores properties that should retain their state throughout all transactions
         $discount = new Discount();
         $shippingRule = new ShippingRule();
         $inputParser = new InputParser();
+        // converting file lines into objects, if they are in the correct format, otherwise leave string
         $transactions = $inputParser->parseInputFile($inputFileName);
 
         foreach ($transactions as $transaction) {
@@ -29,6 +31,7 @@ class Main
                 continue;
             }
 
+            // apply shipping rules to every transaction
             $calculatedPriceAndDiscount = $shippingRule->applyRules($transaction, $discount);
 
             $this->output($transaction, $calculatedPriceAndDiscount);

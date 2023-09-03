@@ -9,6 +9,7 @@ use App\Constant\Providers;
 
 class Storage
 {
+    // in-memory storage for shipment size prices by provider
     public static function getShippingPricesByProvider(): array
     {
         return [

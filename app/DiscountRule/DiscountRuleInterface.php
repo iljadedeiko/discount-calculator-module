@@ -11,5 +11,6 @@ use App\Transaction;
 
 interface DiscountRuleInterface
 {
+    // common interface for all rules
     public function applyRule(Transaction $transaction, Discount $discount): void;
 }

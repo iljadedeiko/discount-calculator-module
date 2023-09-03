@@ -36,6 +36,7 @@ class ThirdShipmentFreeRule implements DiscountRuleInterface
     {
         $LPLDiscountCount = $discount->getAppliedDiscountCount(Discounts::LP_L_DISCOUNT);
 
+        // check if this L_LP shipment is the 3-rd among transactions and the first time in a particular month
         if (
             $LPLDiscountCount === Discounts::LP_L_SIZE_FREE_DELIVERY_RULE
             && $discount->getCurrentMonth() !== $discount->getDiscountAppliedMonth()
@@ -45,6 +46,7 @@ class ThirdShipmentFreeRule implements DiscountRuleInterface
 
         $discount->setAppliedDiscountCount(Discounts::LP_L_DISCOUNT, $LPLDiscountCount + 1);
 
+        // check if it is necessary to reset applied discount count for LP_L discount
         if ($discount->getCurrentMonth() === $discount->getDiscountAppliedMonth()) {
             $discount->setAppliedDiscountCount(Discounts::LP_L_DISCOUNT, 1);
         }
