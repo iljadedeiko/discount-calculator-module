@@ -12,6 +12,11 @@ class DiscountManager
 {
     private array $rules = [];
 
+    public function getRules(): array
+    {
+        return $this->rules;
+    }
+
     public function addRule(DiscountRuleInterface $rule): void
     {
         $this->rules[] = $rule;
