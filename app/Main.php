@@ -6,6 +6,7 @@ namespace App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Constant\Discounts;
 use function sprintf;
 use function number_format;
 
@@ -36,7 +37,11 @@ class Main
     private function output(Transaction $transaction, array $calculatedPriceAndDiscount): void
     {
         $price = number_format($calculatedPriceAndDiscount['price'], 2,  '.', '');
-        $discount = $calculatedPriceAndDiscount['discount'];
+        $discount = number_format($calculatedPriceAndDiscount['discount'], 2,  '.', '');
+
+        if ($discount == 0) {
+            $discount = Discounts::NO_DISCOUNT_SYMBOL;
+        }
 
         echo sprintf(
             "%s %s %s %s %s" . PHP_EOL,
@@ -48,6 +53,3 @@ class Main
         );
     }
 }
-
-$main = new Main();
-$main->run('./../input.txt');

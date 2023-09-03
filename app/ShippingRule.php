@@ -13,7 +13,7 @@ use App\Constant\Providers;
 
 class ShippingRule
 {
-    private float $discountedPrice = 0;
+    private float $accumulatedDiscount = 0;
 
     private array $discountsApplied = [
         Discounts::LP_L_DISCOUNT => 1
@@ -23,6 +23,8 @@ class ShippingRule
 
     private string $discountAppliedMonth = '';
 
+    private string $discountLimitExceededMonth = '';
+
     public function applyRules(Transaction $transaction): array
     {
         $packageSize = $transaction->getPackageSize();
@@ -31,33 +33,32 @@ class ShippingRule
 
         $this->currentMonth = date(Dates::CALENDAR_MONTH_FORMAT, strtotime($date));
 
-        $finalPrice = Storage::getShippingPricesByProvider()[$provider][$packageSize];
+        $price = Storage::getShippingPricesByProvider()[$provider][$packageSize];
         $discount = 0;
 
         if ($packageSize === PackageSizes::S) {
-            $initialPrice = $finalPrice;
-            $finalPrice = $this->getLowestPackagePrice(PackageSizes::S);
+            $initialPrice = $price;
+            $price = $this->getLowestPackagePrice(PackageSizes::S);
 
-            $discount = $initialPrice - $finalPrice;
+            $discount = $initialPrice - $price;
         }
 
         if ($packageSize === PackageSizes::L && $provider === Providers::LP) {
             $freeDeliveryAvailable = $this->checkFreeDeliveryAvailability();
 
             if ($freeDeliveryAvailable) {
-                $discount = $finalPrice;
-                $finalPrice = 0;
+                $discount = $price;
+                $price = 0;
 
                 $this->discountsApplied[Discounts::LP_L_DISCOUNT] = 1;
                 $this->discountAppliedMonth = $this->currentMonth;
             }
         }
 
-        $this->discountedPrice = $discount;
+        $recalculatedPriceAndDiscount = $this->recalculatePriceAndDiscountByLimit($price, $discount);
+        [$finalPrice, $discount] = $recalculatedPriceAndDiscount;
 
-        if ($discount === 0) {
-            $discount = Discounts::NO_DISCOUNT_SYMBOL;
-        }
+        $this->accumulatedDiscount += $discount;
 
         return ['price' => $finalPrice, 'discount' => $discount];
     }
@@ -89,5 +90,36 @@ class ShippingRule
         }
 
         return false;
+    }
+
+    private function recalculatePriceAndDiscountByLimit(float $price, float $currentDiscount): array
+    {
+        if (
+            $this->currentMonth !== $this->discountLimitExceededMonth
+            && $this->accumulatedDiscount >= Discounts::MONTHLY_DISCOUNT_LIMIT
+        ) {
+            $this->accumulatedDiscount = 0;
+        }
+
+        $discount = $this->accumulatedDiscount + $currentDiscount;
+
+        if ($discount > Discounts::MONTHLY_DISCOUNT_LIMIT) {
+            $this->discountLimitExceededMonth = $this->currentMonth;
+
+            $accumulatedDiscountAndLimitDifference = Discounts::MONTHLY_DISCOUNT_LIMIT - $this->accumulatedDiscount;
+
+            if ($accumulatedDiscountAndLimitDifference > $currentDiscount) {
+                $currentDiscount = 0;
+
+                return [$price, $currentDiscount];
+            }
+
+            $currentDiscount = $accumulatedDiscountAndLimitDifference;
+            $updatedDiscountAndLimitDifference = $discount - Discounts::MONTHLY_DISCOUNT_LIMIT;
+
+            $price += $updatedDiscountAndLimitDifference;
+        }
+
+        return [$price, $currentDiscount];
     }
 }

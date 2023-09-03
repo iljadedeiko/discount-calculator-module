@@ -39,7 +39,10 @@ class InputValidator
     {
         $dateFromString = DateTime::createFromFormat(Dates::INPUT_DATE_FORMAT, $date);
 
-        if ($dateFromString->format(Dates::INPUT_DATE_FORMAT) !== $date) {
+        if (
+            $dateFromString === false
+            || $dateFromString->format(Dates::INPUT_DATE_FORMAT) !== $date
+        ) {
             return false;
         }
 
