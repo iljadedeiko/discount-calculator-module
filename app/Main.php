@@ -17,8 +17,6 @@ class Main
     public function run($inputFileName): void
     {
         $inputParser = new InputParser();
-        $shippingRule = new ShippingRule();
-
         $transactions = $inputParser->parseInputFile($inputFileName);
 
         foreach ($transactions as $transaction) {
@@ -28,6 +26,7 @@ class Main
                 continue;
             }
 
+            $shippingRule = new ShippingRule();
             $calculatedPriceAndDiscount = $shippingRule->applyRules($transaction);
 
             $this->output($transaction, $calculatedPriceAndDiscount);
