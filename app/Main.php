@@ -7,8 +7,9 @@ namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Constant\Discounts;
-use function sprintf;
+
 use function number_format;
+use function sprintf;
 
 class Main
 {
@@ -16,6 +17,8 @@ class Main
 
     public function run($inputFileName): void
     {
+        $discount = new Discount();
+        $shippingRule = new ShippingRule();
         $inputParser = new InputParser();
         $transactions = $inputParser->parseInputFile($inputFileName);
 
@@ -26,8 +29,7 @@ class Main
                 continue;
             }
 
-            $shippingRule = new ShippingRule();
-            $calculatedPriceAndDiscount = $shippingRule->applyRules($transaction);
+            $calculatedPriceAndDiscount = $shippingRule->applyRules($transaction, $discount);
 
             $this->output($transaction, $calculatedPriceAndDiscount);
         }

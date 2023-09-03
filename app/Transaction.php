@@ -16,6 +16,10 @@ class Transaction
 
     private string $provider;
 
+    private float $price = 0;
+
+    private float $discount = 0;
+
     public function __construct(string $date, string $packageSize, string $provider)
     {
         $this->date = $date;
@@ -28,7 +32,7 @@ class Transaction
         return $this->date;
     }
 
-    public function setDate(string $date): Transaction
+    public function setDate(string $date): self
     {
         $this->date = $date;
         return $this;
@@ -54,6 +58,30 @@ class Transaction
     public function setProvider(string $provider): self
     {
         $this->provider = $provider;
+
+        return $this;
+    }
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getDiscount(): float
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(float $discount): self
+    {
+        $this->discount = $discount;
 
         return $this;
     }
