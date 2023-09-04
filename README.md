@@ -1,5 +1,5 @@
 # Vinted Backend Homework Assignment
-## Module for calculating shipment discounts based on the provided user transaction data
+## Module for calculating shipment discounts based on the provided user transactions data
 
 ### Tech stack
 * PHP 8.1

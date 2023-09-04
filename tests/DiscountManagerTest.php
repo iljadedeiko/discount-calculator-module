@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use App\Discount;
 use App\DiscountManager;
 use App\DiscountRule\DiscountRuleInterface;
-use App\Transaction;
+use App\Model\Discount;
+use App\Model\Transaction;
 use PHPUnit\Framework\TestCase;
 
 class DiscountManagerTest extends TestCase

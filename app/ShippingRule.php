@@ -10,6 +10,8 @@ use App\Constant\Dates;
 use App\DiscountRule\LowestSPriceRule;
 use App\DiscountRule\MonthlyLimitRule;
 use App\DiscountRule\ThirdShipmentFreeRule;
+use App\Model\Discount;
+use App\Model\Transaction;
 
 class ShippingRule
 {

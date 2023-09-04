@@ -9,8 +9,8 @@ require __DIR__ . '/../../vendor/autoload.php';
 use App\Constant\Discounts;
 use App\Constant\PackageSizes;
 use App\Constant\Providers;
-use App\Discount;
-use App\Transaction;
+use App\Model\Discount;
+use App\Model\Transaction;
 
 class ThirdShipmentFreeRule implements DiscountRuleInterface
 {

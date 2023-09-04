@@ -7,6 +7,8 @@ namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\DiscountRule\DiscountRuleInterface;
+use App\Model\Discount;
+use App\Model\Transaction;
 
 class DiscountManager
 {

@@ -7,8 +7,8 @@ namespace App\DiscountRule;
 require __DIR__ . '/../../vendor/autoload.php';
 
 use App\Constant\Discounts;
-use App\Discount;
-use App\Transaction;
+use App\Model\Discount;
+use App\Model\Transaction;
 
 class MonthlyLimitRule implements DiscountRuleInterface
 {

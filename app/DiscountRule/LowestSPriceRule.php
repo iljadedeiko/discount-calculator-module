@@ -7,9 +7,9 @@ namespace App\DiscountRule;
 require __DIR__ . '/../../vendor/autoload.php';
 
 use App\Constant\PackageSizes;
-use App\Discount;
+use App\Model\Discount;
+use App\Model\Transaction;
 use App\Storage;
-use App\Transaction;
 
 class LowestSPriceRule implements DiscountRuleInterface
 {

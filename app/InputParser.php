@@ -6,8 +6,9 @@ namespace App;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use function file;
+use App\Validator\InputValidator;
 use function explode;
+use function file;
 
 class InputParser
 {

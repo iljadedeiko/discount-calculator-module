@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Validator;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 use App\Constant\Dates;
 use App\Constant\PackageSizes;
 use App\Constant\Providers;
+use App\Model\Transaction;
 use DateTime;
 
 class InputValidator

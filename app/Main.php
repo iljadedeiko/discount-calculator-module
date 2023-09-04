@@ -7,7 +7,8 @@ namespace App;
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Constant\Discounts;
-
+use App\Model\Discount;
+use App\Model\Transaction;
 use function number_format;
 use function sprintf;
 
