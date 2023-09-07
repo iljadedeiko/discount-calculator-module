@@ -22,13 +22,15 @@ class ThirdShipmentFreeRule implements DiscountRuleInterface
         ) {
             $freeDeliveryAvailable = $this->checkFreeDeliveryAvailability($discount);
 
-            if ($freeDeliveryAvailable) {
-                $transaction->setDiscount($transaction->getPrice());
-                $transaction->setPrice(0);
-
-                $discount->setAppliedDiscountCount(Discounts::LP_L_DISCOUNT, 1);
-                $discount->setDiscountAppliedMonth($discount->getCurrentMonth());
+            if ($freeDeliveryAvailable === false) {
+                return;
             }
+
+            $transaction->setDiscount($transaction->getPrice());
+            $transaction->setPrice(0);
+
+            $discount->setAppliedDiscountCount(Discounts::LP_L_DISCOUNT, 1);
+            $discount->setDiscountAppliedMonth($discount->getCurrentMonth());
         }
     }
 

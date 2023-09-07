@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Constant;
 
 require __DIR__ . '/../../vendor/autoload.php';
+
 class Providers
 {
     private function __construct()
