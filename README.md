@@ -1,4 +1,4 @@
-# Module for calculating discounts on products according to certain rules on the basis of transactions (input data from a file)
+# Module for calculating discounts on products according to certain rules based on system user transactions (input data from file)
 
 ### Tech stack
 * PHP 8.1
